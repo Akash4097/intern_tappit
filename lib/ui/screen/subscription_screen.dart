@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tappit/ui/widgets/quantity_list_tile.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   @override
@@ -68,8 +69,8 @@ class SubscriptionScreen extends StatelessWidget {
                     width: 220.0,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        // backgroundColor: MaterialStateColor(),
-                      ),
+                          // backgroundColor: MaterialStateColor(),
+                          ),
                       onPressed: () {},
                       child: Text("SUBSCRIBE"),
                     ),
@@ -209,44 +210,7 @@ class SubscriptionScreen extends StatelessWidget {
   }
 
   Widget _buildQuantityTile(BuildContext context) {
-    return Container(
-      height: 100.0,
-      alignment: Alignment.center,
-      child: ListTile(
-        leading: const Icon(
-          Icons.shopping_bag,
-        ),
-        title: Text("Quantity"),
-        subtitle: Text("per day"),
-        trailing: Container(
-          width: 130.0,
-          alignment: Alignment.center,
-          height: 40.0,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            IconButton(
-              padding: const EdgeInsets.all(0.0),
-              onPressed: () {},
-              icon: Icon(Icons.remove),
-            ),
-            Text(
-              "0",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            IconButton(
-              padding: const EdgeInsets.all(0.0),
-              onPressed: () {},
-              color: Colors.green[600],
-              icon: Icon(Icons.add),
-            ),
-          ]),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40),
-            border: Border.all(width: 1.5, color: Colors.green.shade600),
-          ),
-        ),
-      ),
-    );
+    return QuantityListTile();
   }
 
   Widget _buildProductTile() {
