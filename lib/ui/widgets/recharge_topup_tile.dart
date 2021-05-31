@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:tappit/ui/widgets/delivery_drop_down_button.dart';
 
 class RechargeTopUpTile extends StatefulWidget {
+  final Function setDelivery;
+  final int delivery;
+
+  const RechargeTopUpTile(
+      {Key? key, required this.setDelivery, required this.delivery})
+      : super(key: key);
   @override
   _RechargeTopUpTileState createState() => _RechargeTopUpTileState();
 }
 
 class _RechargeTopUpTileState extends State<RechargeTopUpTile> {
-  int _delivery = 30;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +25,7 @@ class _RechargeTopUpTileState extends State<RechargeTopUpTile> {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text(
-            "$_delivery Deliveries",
+            "${widget.delivery} Deliveries",
             style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 18.0,
@@ -48,10 +52,10 @@ class _RechargeTopUpTileState extends State<RechargeTopUpTile> {
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                   ),
                   DeliveryDropDownButton(
-                      delivery: _delivery,
+                      delivery: widget.delivery,
                       onChanged: (int value) {
                         setState(() {
-                          _delivery = value;
+                          widget.setDelivery(value);
                         });
                       }),
                 ],

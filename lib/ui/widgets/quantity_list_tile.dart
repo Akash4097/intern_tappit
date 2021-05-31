@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 class QuantityListTile extends StatefulWidget {
+  final Function increaseQuantity;
+  final int quantity;
+  final Function decreaseQuantity;
+
+  const QuantityListTile(
+      {Key? key,
+      required this.increaseQuantity,
+      required this.quantity,
+      required this.decreaseQuantity})
+      : super(key: key);
   @override
   _QuantityListTileState createState() => _QuantityListTileState();
 }
 
 class _QuantityListTileState extends State<QuantityListTile> {
-  int _quantity = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,24 +40,25 @@ class _QuantityListTileState extends State<QuantityListTile> {
             IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () {
-                if (_quantity > 0) {
+                if (widget.quantity > 0) {
                   setState(() {
-                    _quantity--;
+                    widget.decreaseQuantity();
                   });
                 }
               },
-              color: _quantity != 0 ? Colors.green[600] : Colors.grey[600],
+              color:
+                  widget.quantity != 0 ? Colors.green[600] : Colors.grey[600],
               icon: const Icon(Icons.remove),
             ),
             Text(
-              "$_quantity",
+              "${widget.quantity}",
               style: Theme.of(context).textTheme.bodyText1,
             ),
             IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () {
                 setState(() {
-                  _quantity++;
+                  widget.increaseQuantity();
                 });
               },
               color: Colors.green[700],

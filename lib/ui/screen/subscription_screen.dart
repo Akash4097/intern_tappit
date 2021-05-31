@@ -1,9 +1,22 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:tappit/ui/widgets/days_selection_tile.dart';
-import 'package:tappit/ui/widgets/quantity_list_tile.dart';
-import 'package:tappit/ui/widgets/recharge_topup_tile.dart';
 
-class SubscriptionScreen extends StatelessWidget {
+import '../widgets/days_selection_tile.dart';
+import '../widgets/product_list_tile.dart';
+import '../widgets/quantity_list_tile.dart';
+import '../widgets/recharge_topup_tile.dart';
+import '../widgets/start_date_tile.dart';
+
+class SubscriptionScreen extends StatefulWidget {
+  @override
+  _SubscriptionScreenState createState() => _SubscriptionScreenState();
+}
+
+class _SubscriptionScreenState extends State<SubscriptionScreen> {
+  final _itemPrice = 531.0;
+  int _quantity = 1;
+  int _deliveries = 30;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,20 +42,20 @@ class SubscriptionScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _buildQuantityTile(context),
-                      Divider(
+                      _buildQuantityTile(),
+                      const Divider(
                         thickness: 2.0,
                       ),
                       _buildDaysSelectionTile(),
-                      Divider(
+                      const Divider(
                         thickness: 2.0,
                       ),
                       _buildRechargeTopUpTile(),
-                      Divider(
+                      const Divider(
                         thickness: 2.0,
                       ),
                       _buildStartDateTile(),
-                      Divider(
+                      const Divider(
                         thickness: 2.0,
                       ),
                     ],
@@ -50,65 +63,80 @@ class SubscriptionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 2.0,
             ),
-            Expanded(
-              child: ButtonBar(
-                children: [
-                  SizedBox(
-                    height: 50.0,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      child: Text(
-                        "DELIVER ONCE",
-                        style: TextStyle(color: Colors.green[600]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50.0,
-                    width: 220.0,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          // backgroundColor: MaterialStateColor(),
-                          ),
-                      onPressed: () {},
-                      child: Text("SUBSCRIBE"),
-                    ),
-                  )
-                ],
-              ),
-            )
+            _buildSubscribeButton(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStartDateTile() {
-    return Container(
-      height: 100.0,
-      child: ListTile(
-        leading: Icon(Icons.calendar_today),
-        title: Text("Start Date"),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-            "Tomorrow",
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.0,
-                color: Colors.black),
+  Expanded _buildSubscribeButton(BuildContext context) {
+    return Expanded(
+      child: ButtonBar(
+        children: [
+          SizedBox(
+            height: 50.0,
+            child: OutlinedButton(
+              onPressed: () {},
+              child: Text(
+                "DELIVER ONCE",
+                style: TextStyle(color: Colors.green[600]),
+              ),
+            ),
           ),
-        ),
-        trailing: Icon(Icons.navigate_next),
+          SizedBox(
+            height: 50.0,
+            width: 220.0,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green)),
+              onPressed: () {
+                CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.success,
+                    title: "Order Details",
+                    text: "₹ ${_itemPrice * _quantity * _deliveries}");
+              },
+              child: const Text("SUBSCRIBE"),
+            ),
+          )
+        ],
       ),
     );
   }
 
+  void _increaseQuantity() {
+    setState(() {
+      _quantity++;
+    });
+  }
+
+  void _decreaseQuantity() {
+    setState(() {
+      if (_quantity > 1) {
+        _quantity--;
+      }
+    });
+  }
+
+  void _setDelivery(int delivery) {
+    setState(() {
+      _deliveries = delivery;
+    });
+  }
+
+  Widget _buildStartDateTile() {
+    return StartDateTile();
+  }
+
   Widget _buildRechargeTopUpTile() {
-    return RechargeTopUpTile();
+    return RechargeTopUpTile(
+      setDelivery: _setDelivery,
+      delivery: _deliveries,
+    );
   }
 
   Widget _buildDaysSelectionTile() {
@@ -116,65 +144,15 @@ class SubscriptionScreen extends StatelessWidget {
     //TODO: don't forgot to add scroolling horizontal on pressed
   }
 
-  Widget _buildQuantityTile(BuildContext context) {
-    return QuantityListTile();
+  Widget _buildQuantityTile() {
+    return QuantityListTile(
+      quantity: _quantity,
+      decreaseQuantity: _decreaseQuantity,
+      increaseQuantity: _increaseQuantity,
+    );
   }
 
   Widget _buildProductTile() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      color: Colors.lightBlue[100],
-      height: 150.0,
-      child: Row(children: [
-        Expanded(
-          child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('images/product.jpg'),
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 16.0),
-        Expanded(
-          flex: 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Tata Gold Tea(1 Kg)",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Colors.grey[600]),
-                  children: const [
-                    TextSpan(
-                      text: "₹ 531",
-                      style: TextStyle(fontSize: 17.0, color: Colors.black),
-                    ),
-                    TextSpan(
-                      text: " ₹ 625.00",
-                      style: TextStyle(decoration: TextDecoration.lineThrough),
-                    ),
-                    TextSpan(
-                      text: " .1 pkt",
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
-    );
+    return ProductListTile();
   }
 }
