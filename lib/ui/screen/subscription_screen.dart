@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tappit/ui/widgets/days_selection_tile.dart';
 import 'package:tappit/ui/widgets/quantity_list_tile.dart';
+import 'package:tappit/ui/widgets/recharge_topup_tile.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   @override
@@ -107,29 +108,12 @@ class SubscriptionScreen extends StatelessWidget {
   }
 
   Widget _buildRechargeTopUpTile() {
-    return Container(
-      alignment: Alignment.center,
-      height: 100.0,
-      child: ListTile(
-        leading: Icon(Icons.replay),
-        title: Text("Recharge/Top up"),
-        trailing: Icon(Icons.navigate_next),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-            "30 Deliveries",
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.0,
-                color: Colors.black),
-          ),
-        ),
-      ),
-    );
+    return RechargeTopUpTile();
   }
 
   Widget _buildDaysSelectionTile() {
     return DaysSelectionTile();
+    //TODO: don't forgot to add scroolling horizontal on pressed
   }
 
   Widget _buildQuantityTile(BuildContext context) {
