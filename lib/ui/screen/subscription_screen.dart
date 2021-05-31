@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tappit/ui/widgets/days_selection_tile.dart';
 import 'package:tappit/ui/widgets/quantity_list_tile.dart';
 
 class SubscriptionScreen extends StatelessWidget {
@@ -128,85 +129,7 @@ class SubscriptionScreen extends StatelessWidget {
   }
 
   Widget _buildDaysSelectionTile() {
-    return Container(
-      alignment: Alignment.center,
-      height: 100.0,
-      child: ListTile(
-        leading: Icon(Icons.autorenew_rounded),
-        title: Row(
-          children: [
-            Text("Repeat"),
-            TextButton(
-              onPressed: () {},
-              child: Text("DAILY"),
-            )
-          ],
-        ),
-        subtitle: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "M",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "T",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "W",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "T",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "F",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "S",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ChoiceChip(
-                selected: true,
-                selectedColor: Colors.green[300],
-                label: Text(
-                  "S",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    return DaysSelectionTile();
   }
 
   Widget _buildQuantityTile(BuildContext context) {
