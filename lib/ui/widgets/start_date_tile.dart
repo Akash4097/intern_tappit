@@ -34,8 +34,7 @@ class _StartDateTileState extends State<StartDateTile> {
 
   Future<void> _selectDate(BuildContext context) async {
     bool _decideWhichDayToEnable(DateTime day) {
-      if (day.isAfter(DateTime.now().subtract(const Duration(days: 1))) &&
-          day.isBefore(DateTime.now().add(const Duration(days: 10)))) {
+      if (day.isAfter(DateTime.now().subtract(const Duration(days: 1)))) {
         return true;
       }
       return false;
